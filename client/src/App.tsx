@@ -1,32 +1,57 @@
-import {BrowserRouter,Route,Routes} from 'react-router-dom';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import TempLayout from './pages/TempLayout';
-import LandingPage from './pages/LandingPage';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Register from "./pages/Register/Register";
+import Login from "./pages/Login/Login";
+import LandingPage from "./pages/LandingPage";
+import { AuthProvider } from "./context/AuthContext";
+import RoleGuard from "./components/RoleGuard";
+import BussinessDashboard from "./layout/Bussiness/BussinessDashboard";
+import DashboardController from "./page-controller/DashboardController";
+import NotFound from "./components/404/NotFound";
+import OrderController from "./page-controller/OrderController";
+import SellerProducts from "./pages/SellerPages/products/SellerProducts";
 
 const App = () => {
- return (
-   <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<TempLayout />}>
-        <Route index element={<LandingPage />} />
-        <Route path='register' element={<Register />} />
-        <Route path='404' element={<Register />} />
-        <Route path='login' element={<Login />} />
-        {/* <Route path="login" element={<Login />}>
-          <Route path=":teamId" element={<Team />} />
-          <Route path="new" element={<NewTeamForm />} />
-          <Route index element={<LeagueStandings />} />
-        </Route> */}
-      </Route>
-      {/* <Route element={<PageLayout />}>
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/tos" element={<Tos />} />
-      </Route> */}
-      {/* <Route path="contact-us" element={<Contact />} /> */}
-    </Routes>
-  </BrowserRouter>
- )
- };
+    return (
+        <AuthProvider>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/">
+                        <Route index element={<LandingPage />} />
+                        <Route path="register" element={<Register />} />
+                        <Route path="login" element={<Login />} />
+                        <Route path="404" element={<NotFound />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Route>
+
+                    <Route element={<RoleGuard allowedRoles={["bussiness"]} />}>
+                        <Route
+                            path="/admin-list-students"
+                            element={<BussinessDashboard />}
+                        />
+                    </Route>
+
+                    <Route element={<RoleGuard allowedRoles={["supplier"]} />}>
+                        <Route
+                            path="/dashboard"
+                            element={<DashboardController />}
+                        />
+                        <Route path="/order" element={<OrderController />} />
+                        <Route path="/products" element={<SellerProducts />} />
+                        <Route path="/report" element={<SellerProducts />} />
+                        <Route path="/analytics" element={<SellerProducts />} />
+                    </Route>
+
+                    <Route
+                        element={
+                            <RoleGuard
+                                allowedRoles={["business", "admin", "supplier"]}
+                            />
+                        }
+                    ></Route>
+                </Routes>
+            </BrowserRouter>
+        </AuthProvider>
+    );
+};
 
 export default App;

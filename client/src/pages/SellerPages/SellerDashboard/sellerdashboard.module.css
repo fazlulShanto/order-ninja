@@ -1,0 +1,23 @@
+.plot-container{
+    /* background-color: white; */
+    /* box-shadow: 1px 1px 1px 1px black; */
+    display: flex;
+    width: 100%;
+    /* border: 1px solid #49e919; */
+    height: 57vh;
+    
+    /* flex-direction: column; */
+}
+.plots{
+    /* background-color: yellow; */
+    /* flex:1; */
+    width: 50%;
+    height: 300px;
+    /* background-color: #49e919; */
+    display: flex;
+    flex-direction: column;
+}
+.latest-sales{
+    flex: 1;
+    height: 100%;
+}

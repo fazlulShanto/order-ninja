@@ -1,21 +1,23 @@
 import mongoose, { mongo } from "mongoose";
 export interface IUser{
     id:string,
-    first_name : string,
-    last_name:string,
-    roles : [],
+    store_id ? : string,
+    first_name ?: string,
+    last_name?:string,
+    role : string,
     password:string,
     email:string,
-    phone : string,
-    address:string,
-    avatar : string
+    phone ?: string,
+    address ?:string,
+    avatar ?: string
 }
 
 const userSchema = new mongoose.Schema<IUser>({
     id:String,
     first_name : String,
     last_name : String,
-    roles : [],
+    role : String,
+    store_id:String,
     password : String,
     email : {
         type : String,
@@ -24,6 +26,8 @@ const userSchema = new mongoose.Schema<IUser>({
     phone : String,
     address : String,
     avatar : String
+},{
+    timestamps:true
 });
 
 const userModel = mongoose.model<IUser>('user',userSchema);
@@ -40,7 +44,7 @@ export async function getFullName(userId:string){
     }
 }
 
-export async function getUser(userId : string){
+export async function getUserById(userId : string){
     try {
         const data = await userModel.findOne({id : userId}).exec();
         if(!data){
@@ -51,15 +55,52 @@ export async function getUser(userId : string){
         throw error;
     }
 }
+export async function getUserByEmail(email : string){
+    try {
+        const data = await userModel.findOne({email:email}).exec();
+        if(!data){
+            return undefined;
+        }
+        return data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function createUser(userObj : IUser){
+    try {
+        const result = await userModel.create(userObj);
+        return true;
+    } catch (error) {
+        throw error;
+    }
+}
 
 export async function getUserRoles (userId:string){
     try {
         const data = await userModel.findOne({id:userId}).select('roles').exec();
-        if(data?.roles.length){
+        if(data?.role.length){
             return data;
         }
         return data;
     } catch (error) {
     throw error;
+    }
+}
+
+export async function deleteUserById(userId : string){
+    try {
+        const result = userModel.deleteOne({id : userId}).exec();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+export async function updateUserById(userId : string,updatedUser : IUser){
+    try {
+        const result = userModel.updateOne({id : userId},updatedUser).exec();
+        return result;
+    } catch (error) {
+        throw error;
     }
 }

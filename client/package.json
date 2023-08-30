@@ -10,9 +10,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.5",
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.11.2",
+    "@faker-js/faker": "^8.0.2",
+    "@types/faker": "^6.6.9",
+    "@types/react-highlight-words": "^0.16.4",
     "antd": "^5.8.4",
+    "apexcharts": "^3.42.0",
+    "axios": "^1.5.0",
+    "chart.js": "^4.4.0",
+    "cloudinary-react": "^1.8.1",
+    "faker": "^6.6.6",
     "react": "^18.2.0",
+    "react-apexcharts": "^1.4.1",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
+    "react-highlight-words": "^0.20.0",
+    "react-icons": "^4.10.1",
     "react-router-dom": "^6.15.0"
   },
   "devDependencies": {

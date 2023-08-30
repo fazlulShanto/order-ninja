@@ -25,6 +25,9 @@ const orderSchema = new mongoose.Schema<IOrder>(
         timestamps : true
     }
 );
+
+
+
 const orderModel = mongoose.model('order',orderSchema);
 
 export async function getOrdersByStore(storeId:string){
@@ -43,3 +46,12 @@ export async function getOrdersByUser(userId:string){
         throw error;
     }
 }
+export async function getOrdersByDate(date:string){
+    try {
+        const userOrderList = await orderModel.find({create : date}).exec();
+        return userOrderList;
+    } catch (error) {
+        throw error;
+    }
+}
+

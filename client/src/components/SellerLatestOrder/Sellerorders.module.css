@@ -1,0 +1,11 @@
+.latest-sales{
+    /* background-color: red; */
+    /* margin-top: 8px; */
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 8px;
+    width: 50%;
+    box-shadow: 1px 1px 1px 1px rgb(230, 228, 228);
+    padding: 8px 16px;
+    gap:16px;
+}

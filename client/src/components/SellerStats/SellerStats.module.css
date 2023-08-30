@@ -1,0 +1,12 @@
+.stats-card-div{
+    height: 30vh;
+    all:none;
+    /* border: 1px solid red; */
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}

@@ -1,0 +1,9 @@
+.latest-sell-product-div{
+    display: flex;
+    flex-direction: row;
+    /* border: 1px solid white; */
+    padding: 3px 6px;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 1px solid red; */
+}

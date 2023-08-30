@@ -1,0 +1,50 @@
+.left-column{
+    background-color: red;
+
+}
+.right-column{
+    background-color: rgb(192, 192, 185);
+    
+}
+.form-wrapper{
+    border: 1px solid red;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-form-div{
+    height: 100vh;
+    width: 100vw;
+    border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.form-div{
+    width: 600px;
+    border: 1px solid green;
+}
+
+.register-container{
+    height:100vh ;
+    padding: 10vh 20vw;
+    border: 2px solid red;
+}
+.register-div{
+    background-color: aliceblue;
+    box-shadow: 1px 1px 1px  rgb(233, 230, 230);
+    padding: 10px 20px;
+    /* margin-bottom: 16px;/ */
+}
+.step-content{
+    height: 300px;
+    /* border: 1px solid rgb(34, 34, 7); */
+    padding: 16px 8px;
+    
+    /* background-color: red; */
+}

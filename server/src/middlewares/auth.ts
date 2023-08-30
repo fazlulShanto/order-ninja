@@ -1,22 +1,28 @@
-import jwt from 'jsonwebtoken';
 import {Request,Response,NextFunction} from 'express';
+import jwt, { JwtPayload, Secret }  from "jsonwebtoken";
 import { config } from '../configs/config';
 const {JWT_KEY} = config;
 
-// const errorMessages = require('../utils/errorMessages');
-interface RequestWithAuthUser extends Request {
-    authUser : Object
-}
-export async function checkAuth(req :RequestWithAuthUser, res:Response, next:NextFunction) {
+import { CustomRequest ,IUserPayload} from '../Interfaces/CustomRequest';
+export async function checkAuth(req :Request, res:Response, next:NextFunction) {
   try {
-    const token  = req.headers['x-auth-token'] as string;
-    // if (!token) return res.status(401).json(errorMessages.accessDenied);
-    const data = jwt.verify( token, JWT_KEY);
-    console.log('auth data',data);
-    req.authUser = data;
+    const cookies = req.cookies;
+    const token = cookies.jwt;
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    const jwtSecret = process.env.JWT_SECRET as Secret;
+    
+    if (!token) return res.sendStatus(401);
+
+    const decodeData = jwt.verify( token, JWT_KEY);
+
+    (req as CustomRequest).user = decodeData as IUserPayload;
+    
     next();
+
   } catch (error) {
-    if (error.name === 'TokenExpiredError') return res.status(401).json(error);
+    return res.sendStatus(401);
   }
 }
 

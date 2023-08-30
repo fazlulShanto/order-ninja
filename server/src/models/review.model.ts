@@ -35,7 +35,7 @@ export async function getReviewByProduct(productId : string){
     }
 }
 
-export async function getUserProductReview(userId,productId){
+export async function getUserProductReview(userId : string,productId : string){
     try {
 
         const reviewList = await reviewModel.
@@ -48,3 +48,28 @@ export async function getUserProductReview(userId,productId){
         throw error;
     }
 }
+
+export async function deleteProductReview(reviewId : string){
+
+    try {
+        
+        const result = await reviewModel.deleteOne({id : reviewId}).exec();
+        return result;
+        
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function editProductReview(reviewId : string , newReview : IReview){
+
+    try {
+        
+        const result = await reviewModel.updateOne({id : reviewId},newReview).exec();
+        return result;
+        
+    } catch (error) {
+        throw error;
+    }
+}
+

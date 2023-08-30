@@ -1,10 +1,13 @@
 import mongoose from "mongoose";
 import { getProductsByStore } from "./products.model";
 import { getOrdersByStore } from "./order.model";
+import { generateUUID } from "../utils/generic.util";
 
 export interface IStore{
     id :string,
     name : string,
+    store_id : string,
+    owner_id : string,
     product_ids: string[],
     order_ids : string[],
     scheduled_order : string[],
@@ -16,10 +19,19 @@ const storeSchema = new mongoose.Schema<IStore>({
         type:String,
         unique:true
     },
+    owner_id:{
+        type:String,
+        unique:true
+    },
     name : {
         type :String,
         unique : true
-    }
+    },
+    product_ids:Array,
+    order_ids:Array,
+    scheduled_order:Array,
+    payment_stats:Array
+    
 },{
     timestamps:true
 });
@@ -36,6 +48,16 @@ export async function getStoreById(storeId  : string){
     }
 }
 
+export async function getStoreByUserId(userId  : string){
+    //get product list 
+    try {
+        const storeInfo  = await storeModel.findOne({ owner_id: userId}).exec();
+        return storeInfo;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export async function getAllStore(storeId  : string){
     //get product list 
     try {
@@ -46,3 +68,26 @@ export async function getAllStore(storeId  : string){
     }
 }
 
+export async function deleteStoreById(storeId : string){
+    try {
+        const storeInfo  = await storeModel.deleteOne({id : storeId}).exec();
+        return storeInfo;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function createStore(userId :string){
+    const id = await generateUUID();
+    try {
+        const store = await storeModel.create({
+            owner_id: userId,
+            id:id,
+            name : '',
+        });
+        return store;
+    } catch (error) {
+        console.log(error)
+        throw error;
+    }
+}

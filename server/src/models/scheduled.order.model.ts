@@ -54,3 +54,13 @@ export async function getScheduledOrderByUserId(userId: string): Promise<ISchedu
         throw error;
     }
 }
+
+export async function deleteScheduledOrderByUserId(userId: string) {
+    try {
+        const scheduleOrderList = await schOrderModel.deleteOne({user_id : userId}).exec();
+        return scheduleOrderList;
+    } catch (error) {
+        throw error;
+    }
+}
+

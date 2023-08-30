@@ -1,0 +1,14 @@
+.card-container{
+    width: fit-content;
+    /* height: 11.25rem; */
+    border-radius:1rem;
+    display:flex;
+    flex-direction:'column';
+    justify-content: space-between;
+    padding: 0 !important;
+    color:black;
+}
+
+.card-stat{
+    color: #4079ED;
+}
