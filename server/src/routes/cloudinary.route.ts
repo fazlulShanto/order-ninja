@@ -26,7 +26,7 @@ cloudinaryRouter.post(
     upload.array("file"),
     async (req: any, res: Response) => {
         try {
-            // console.log(req.files);
+            // console.log('🎇🎈',req.files);
 
             const result : string[] = [];
             for (let i = 0; i < req.files.length; i++) {
@@ -35,11 +35,13 @@ cloudinaryRouter.post(
                 try {
                     const cldRes = await handleUpload(dataURI);
                     result.push(cldRes.url);
+                    // console.log(cldRes.url);
                 } catch (error) {
                     //
                 }
             }
-            res.json(result);
+            console.log(`final result : `,result);
+           return res.json(result);
         } catch (error) {
             console.log(error);
             res.send({

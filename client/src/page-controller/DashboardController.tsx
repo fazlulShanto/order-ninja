@@ -1,9 +1,9 @@
-import AdminDashboard from "../layout/Admin/AdminDashboard";
-import BussinessDashboard from "../layout/Bussiness/BussinessDashboard";
+
+import BussinessDashboard from "../layout/Bussiness/BusinessLayout";
 import SellerDashboard from "../pages/SellerPages/SellerDashboard/SellerDashboard";
-import SellerLayout from "../layout/Seller/SellerLayout";
 
 import { getLocalUserInfo } from "../utils/helpers/setUserLocalInfo";
+import AdminDashboard from "../pages/AdminPages/admin dashboard/AdminDashboard";
 
 
 function DashboardController() {

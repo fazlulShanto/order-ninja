@@ -4,7 +4,7 @@ import CreateNewProductForm from './CreateNewProductForm';
 
 
 
-const CreateNewProduct: React.FC = () => {
+const CreateNewProduct: React.FC = ({tableUpdater,setU}) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState('Content of the modal');
@@ -43,7 +43,7 @@ const CreateNewProduct: React.FC = () => {
     
         footer={null}
       >
-        <CreateNewProductForm />
+        <CreateNewProductForm setOpen= {setOpen} tableUpdater={tableUpdater} />
       </Modal>
     </>
   );

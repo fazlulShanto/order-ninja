@@ -63,9 +63,9 @@ const SellerWeeklyChart = () => {
   //   </div>
   // );
   return (
-    <div style={{height:'200px',marginBottom:'16px'}}>
+    <div >
       <h3>Sales Data</h3>
-      <Bar data={data} options={options} />
+      <Bar  style={{ minHeight : "150px",maxHeight:'200px', width:"auto",backgroundColor:'aliceblue'}} data={data} options={options} />
     </div>
   );
 };

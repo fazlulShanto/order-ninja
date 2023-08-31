@@ -20,7 +20,8 @@ export async function handleLogin(req : Request,res:Response){
             id : dbUser?.id,
             name : dbUser?.first_name + " "+dbUser?.last_name,
             first_name : dbUser?.first_name,
-            last_name : dbUser?.last_name
+            last_name : dbUser?.last_name,
+            store_id  : dbUser?.store_id
         };
         const isPasswordCorrect = bcrypt.compareSync(
             password,

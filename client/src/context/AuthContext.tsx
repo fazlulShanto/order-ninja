@@ -15,6 +15,7 @@ export function AuthProvider({ children  } : MyComponentProps) {
     const [role, setRole] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
     const [cart , setCart] = useState("");
+    const [upd,setUpd] = useState(0);
     return (
         <AuthContext.Provider
             value={{
@@ -24,7 +25,8 @@ export function AuthProvider({ children  } : MyComponentProps) {
                 email,setEmail,
                 role,setRole,
                 loggedIn,setLoggedIn,
-                cart,setCart
+                cart,setCart,
+                upd , setUpd
             }}
         >
             {children}

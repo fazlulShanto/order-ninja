@@ -44,21 +44,9 @@ function getItem(
 const iconStyle = { fontSize: "20px", color: "#73fbfd" };
 
 const items: MenuItem[] = [
-    getItem("Dashboard", "/dashboard", <HomeOutlined style={iconStyle} />),
+    getItem("Marketplace", "/marketplace", <HomeOutlined style={iconStyle} />),
     getItem("Orders", "/order", <ShoppingCartOutlined style={iconStyle} />),
     getItem("Products", "/products", <ShoppingOutlined style={iconStyle} />),
-    getItem("Manage", "/manage", <BarChartOutlined style={iconStyle} />),
-    getItem("Analytics", "/analytics", <DesktopOutlined style={iconStyle} />),
-    // getItem("User", "sub1", <UserOutlined />, [
-    //     getItem("Tom", "3"),
-    //     getItem("Bill", "4"),
-    //     getItem("Alex", "5"),
-    // ]),
-    // getItem("Team", "sub2", <TeamOutlined />, [
-    //     getItem("Team 1", "6"),
-    //     getItem("Team 2", "8"),
-    // ]),
-    // getItem("Files", "9", <FileOutlined />),
 ];
 
 const siderBottomItem: MenuItem[] = [
@@ -70,7 +58,7 @@ interface Props {
     children: React.ReactNode;
 }
 
-const AdminLayout: React.FC<Props> = (props) => {
+const BusinessLayout: React.FC<Props> = (props) => {
     const [collapsed, setCollapsed] = useState(false);
 
     const location = useLocation();
@@ -140,5 +128,4 @@ const AdminLayout: React.FC<Props> = (props) => {
     );
 };
 
-
-export default AdminLayout
+export default BusinessLayout;

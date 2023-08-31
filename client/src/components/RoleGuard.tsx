@@ -6,7 +6,7 @@ function RoleGuard({allowedRoles} : any) {
 
     // check if auth has info 
     const oldData = getLocalUserInfo();
-    console.log(oldData)
+    // console.log(oldData)
     // if(oldData.r)
     // const { user_id,loggedIn,roles,setUserId,setLoggedIn,setRoles} = useAuth();
 

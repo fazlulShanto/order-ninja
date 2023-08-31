@@ -5,6 +5,10 @@ import loginRoute from "./login.route";
 import registrationRouter from "./register.route";
 import storeRouter from "./store.route";
 import cloudinaryRouter from "./cloudinary.route";
+import productRouter from "./product.route";
+import publicRouter from "./public.route";
+
+
 
 
 
@@ -16,10 +20,13 @@ indexRouter.get('/',(req,res)=>{
 
 indexRouter.use('/login',loginRoute);
 indexRouter.use('/register',registrationRouter);
+// indexRouter.use('/register',registrationRouter);
+indexRouter.use('/public',publicRouter);
 
 indexRouter.use(checkAuth);
 indexRouter.use('/user',userRoute);
 indexRouter.use('/store',storeRouter);
+indexRouter.use('/product',productRouter);
 
 
 export default indexRouter;

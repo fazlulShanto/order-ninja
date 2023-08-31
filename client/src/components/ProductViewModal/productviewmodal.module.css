@@ -1,0 +1,36 @@
+.product-card {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    background-color: red;
+  }
+  .product-view{
+    width: 100%;
+    
+  }
+  .product-carousel {
+    margin-bottom: 20px;
+    /* width: 100%; */
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .product-details {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .carousel-img{
+    /* border: 1px solid red; */
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  .product-stat-div{
+    /* border: 1px solid red; */
+    background-color: aliceblue;
+  }

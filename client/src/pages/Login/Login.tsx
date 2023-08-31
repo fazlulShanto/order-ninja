@@ -40,7 +40,8 @@ const Login: React.FC = () => {
             setToken(info.token);
             setEmail(info.email);
 
-            setLocalUserInfo({ ...info, loggedIn: true });
+            setLocalUserInfo({ ...info, raw_user :JSON.stringify(result),loggedIn: true });
+            
             navigator("/dashboard");
         } catch (error) {
             console.log(error);

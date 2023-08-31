@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import {
-    Form,
+
     Input,
     Button,
     Upload,
@@ -10,17 +10,19 @@ import {
     InputNumber,
 } from "antd";
 
-import { FormItemProps, UploadFile, message } from "antd";
+import { FormItemProps, UploadFile, message,Form } from "antd";
 
 import { UploadOutlined } from "@ant-design/icons";
-import CourseAttachment from "./Upload";
+
+
 
 import type { RcFile, UploadProps } from "antd/es/upload/interface";
 import axios from "axios";
-import { getLocalUserInfo } from "../../utils/helpers/setUserLocalInfo";
-import UploadToCloud from "./Upload";
 import CustomInstance from "../../lib/axios";
 import useAuth from "../../hooks/useAuth";
+import SellerLayout from "../../layout/Seller/SellerLayout";
+import { getLocalUserInfo } from "../../utils/helpers/setUserLocalInfo";
+import { useLocation } from "react-router-dom";
 const MyFormItemContext = React.createContext<(string | number)[]>([]);
 
 interface MyFormItemGroupProps {
@@ -33,29 +35,6 @@ function toArr(
 ): (string | number)[] {
     return Array.isArray(str) ? str : [str];
 }
-
-const MyFormItemGroup = ({ prefix, children }: MyFormItemGroupProps) => {
-    const prefixPath = React.useContext(MyFormItemContext);
-    const concatPath = React.useMemo(
-        () => [...prefixPath, ...toArr(prefix)],
-        [prefixPath, prefix]
-    );
-
-    return (
-        <MyFormItemContext.Provider value={concatPath}>
-            {children}
-        </MyFormItemContext.Provider>
-    );
-};
-
-const MyFormItem = ({ name, ...props }: FormItemProps) => {
-    const prefixPath = React.useContext(MyFormItemContext);
-    const concatName =
-        name !== undefined ? [...prefixPath, ...toArr(name)] : undefined;
-
-    return <Form.Item name={concatName} {...props} />;
-};
-
 const getBase64 = (file: RcFile): Promise<string> =>
     new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -64,9 +43,16 @@ const getBase64 = (file: RcFile): Promise<string> =>
         reader.onerror = (error) => reject(error);
     });
 
-function CreateNewProductForm({tableUpdater,setU,setOpen}) {
+function EditProduct() {
+
+    
+    const [form] = Form.useForm();
+    const {state : pageSate} =  useLocation();
+    
 
     const {setUpd} = useAuth();
+
+    const [productData, setProductData] = useState();
 
     const [uploading, setUploading] = useState(false);
     const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -95,6 +81,30 @@ function CreateNewProductForm({tableUpdater,setU,setOpen}) {
         }
     };
 
+    const {raw_user :{store_id}} = getLocalUserInfo();
+
+    useEffect(() => {
+
+        CustomInstance.get(`/product/single/${pageSate.pid}`).then(res => {
+            console.log(res.data);
+            form.setFieldValue('name',res.data.name);
+            form.setFieldValue('category',res.data.category[0]);
+            form.setFieldValue('description',res.data.description);
+            form.setFieldValue('unit_size',res.data.unit_size);
+            form.setFieldValue('price',res.data.price);
+            form.setFieldValue('weight',res.data.weight);
+            form.setFieldValue('stock',res.data.stock);
+            setProductData(res.data);
+            // console.log(store_id)
+
+        }).catch(er =>{
+            console.log(er);
+        })
+        ;
+
+    }, [store_id])
+    
+
     const props: UploadProps = {
         name: "file",
         onRemove: (file) => {
@@ -120,7 +130,7 @@ function CreateNewProductForm({tableUpdater,setU,setOpen}) {
     const onFinish = async (value: object) => {
         // console.log(urlList);
         try {
-            const imgUrls = await handleUpload();
+            // const imgUrls = await handleUpload();
 
             // id : String,
             // store_id : String,
@@ -132,19 +142,21 @@ function CreateNewProductForm({tableUpdater,setU,setOpen}) {
             // images : Array,
             // reviews : Array
 
+            console.log('******************',value);
+
             const newProduct = {
                 ...value,
-                images: imgUrls,
+                // images: imgUrls,
             };
             const axr = await CustomInstance.post(
-                `/product/${rawJson.store_id}`,
+                `/product/update/${pageSate.pid}`,
                 newProduct
             );
-            tableUpdater(Date.now());
-            setU(()=> Date.now());
-            setOpen(false);
-            setUpd((prev)=> Date.now());
-            message.success(`Product Created!`);
+            // tableUpdater(Date.now());
+            // setU(()=> Date.now());
+            // setOpen(false);
+            // setUpd((prev)=> Date.now());
+            message.success(`Product Updated!`);
             
         } catch (error) {
             console.log(error);
@@ -154,7 +166,9 @@ function CreateNewProductForm({tableUpdater,setU,setOpen}) {
         // console.log(ddr)
     };
     return (
-        <Form name="form_item_path" layout="vertical" onFinish={onFinish}>
+        <SellerLayout>
+            <div style={{marginBottom:'16px'}}><h3></h3></div>
+            <Form name="form_item_path" form={form} layout="vertical" onFinish={onFinish}>
             <Row>
                 <Col span={12}>
                     <Form.Item
@@ -264,17 +278,18 @@ function CreateNewProductForm({tableUpdater,setU,setOpen}) {
                 </Col>
             </Row>
 
-            <Upload {...props}>
+            {/* <Upload {...props}>
                 <Button icon={<UploadOutlined />}>Select File</Button>
-            </Upload>
+            </Upload> */}
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit" onClick={handleUpload}>
+            <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+                <Button type="primary" style={{width:"100%"}} htmlType="submit" onClick={handleUpload}>
                     Submit
                 </Button>
             </Form.Item>
         </Form>
+
+        </SellerLayout>
     );
 }
-
-export default CreateNewProductForm;
+export default EditProduct;

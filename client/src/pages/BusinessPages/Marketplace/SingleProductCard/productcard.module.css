@@ -1,0 +1,11 @@
+.card-container{
+    /* background-color: #e8f7f0; */
+    background-color: aliceblue;
+    width: 200px;
+    padding: 8px;
+    height: fit-content;
+    /* border: 1px solid rgb(176, 168, 172); */
+    box-shadow: 0 2px 4px rgba(94, 118, 115, 0.1);
+    border-radius: 6px;
+    
+}

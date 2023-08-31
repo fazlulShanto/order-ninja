@@ -13,4 +13,6 @@ export interface IUseAuthHook{
     setLoggedIn : (v : boolean)=> void,
     cart : string,
     setCart : (token : string) => void,
+    upd : number,
+    setUpd : () => number,
 }

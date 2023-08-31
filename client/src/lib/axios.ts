@@ -6,7 +6,8 @@ const CustomInstance = axios.create({
 	// headers: { Authorization: "Bearer " + localStorage.tid },
     withCredentials : true,
     headers:{
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        
     }
 });
 

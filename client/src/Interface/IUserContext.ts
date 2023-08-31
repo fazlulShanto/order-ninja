@@ -8,7 +8,8 @@ export interface IUserContext{
     first_name: string,
     last_name: string,
     cart ?: object,
-    loggedIn ?: boolean
+    loggedIn ?: boolean,
+    upd ? : number
     
 }
 
