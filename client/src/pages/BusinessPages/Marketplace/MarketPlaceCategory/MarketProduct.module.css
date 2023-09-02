@@ -1,0 +1,28 @@
+.single-category{
+    padding: 0;
+    border: 1px solid rgb(147, 176, 135);
+    margin: 5px;
+    list-style: none;
+    min-width: fit-content;
+    padding: 2px 12px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    background-color: rgb(187, 216, 187);
+}
+.scroll-container{
+    display: flex;
+}
+
+.scroll-container {
+  width: 100%;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}

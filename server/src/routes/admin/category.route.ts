@@ -6,7 +6,7 @@ import { getCatList,addCatList,deleteCat} from "../../controllers/category.contr
 const cateogryRouter = Router();
 
 cateogryRouter.get('/',getCatList);
-cateogryRouter.post('/:categoryId',addCatList);
+cateogryRouter.post('/',addCatList);
 cateogryRouter.get('/delete/:categoryId',deleteCat);
 
 export default cateogryRouter;

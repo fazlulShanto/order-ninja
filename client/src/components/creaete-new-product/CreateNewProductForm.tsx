@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Form,
     Input,
@@ -11,14 +11,9 @@ import {
 } from "antd";
 
 import { FormItemProps, UploadFile, message } from "antd";
-
 import { UploadOutlined } from "@ant-design/icons";
-import CourseAttachment from "./Upload";
-
 import type { RcFile, UploadProps } from "antd/es/upload/interface";
 import axios from "axios";
-import { getLocalUserInfo } from "../../utils/helpers/setUserLocalInfo";
-import UploadToCloud from "./Upload";
 import CustomInstance from "../../lib/axios";
 import useAuth from "../../hooks/useAuth";
 const MyFormItemContext = React.createContext<(string | number)[]>([]);
@@ -64,15 +59,18 @@ const getBase64 = (file: RcFile): Promise<string> =>
         reader.onerror = (error) => reject(error);
     });
 
-function CreateNewProductForm({tableUpdater,setU,setOpen}) {
-
-    const {setUpd} = useAuth();
+function CreateNewProductForm({ updater, setOpen }) {
+    const [productForm] = Form.useForm();
 
     const [uploading, setUploading] = useState(false);
+
     const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+    const [catList, setCatList] = useState([]);
+
     const raw: string = localStorage.getItem("raw_user")!;
     const rawJson = JSON.parse(raw);
-    console.log(JSON.parse(raw));
+    // console.log(JSON.parse(raw));
 
     const handleUpload = async () => {
         const formData = new FormData();
@@ -111,11 +109,20 @@ function CreateNewProductForm({tableUpdater,setU,setOpen}) {
         fileList,
     };
 
-    const categoryValue = [
-        { value: "jack2", label: "Jack1" },
-        { value: "lucy2", label: "Lucy1" },
-        { value: "Yiminghe2", label: "yiminghe1" },
-    ];
+    useEffect(() => {
+        try {
+            const apiCall = async () => {
+                const { data } = await CustomInstance.get(`/category`);
+                // console.log(data)
+                setCatList(
+                    data.map((cl) => ({ label: cl.name, value: cl.id }))
+                );
+            };
+            apiCall();
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
 
     const onFinish = async (value: object) => {
         // console.log(urlList);
@@ -140,21 +147,34 @@ function CreateNewProductForm({tableUpdater,setU,setOpen}) {
                 `/product/${rawJson.store_id}`,
                 newProduct
             );
-            tableUpdater(Date.now());
-            setU(()=> Date.now());
+            updater();
             setOpen(false);
-            setUpd((prev)=> Date.now());
+            productForm.resetFields([
+                "name",
+                "category",
+                "description",
+                "unit_size",
+                "price",
+                "weight",
+                "stock",
+            ]);
+            setFileList([]);
             message.success(`Product Created!`);
-            
         } catch (error) {
             console.log(error);
         }
         // console.log(ddr);
-        console.log(value);
+        // console.log(value);
         // console.log(ddr)
     };
+
     return (
-        <Form name="form_item_path" layout="vertical" onFinish={onFinish}>
+        <Form
+            form={productForm}
+            name="form_item_path"
+            layout="vertical"
+            onFinish={onFinish}
+        >
             <Row>
                 <Col span={12}>
                     <Form.Item
@@ -163,7 +183,7 @@ function CreateNewProductForm({tableUpdater,setU,setOpen}) {
                         rules={[
                             {
                                 required: true,
-                                message: "Please input your Username!",
+                                message: "Please enter product name!",
                             },
                         ]}
                     >
@@ -177,13 +197,14 @@ function CreateNewProductForm({tableUpdater,setU,setOpen}) {
                         rules={[
                             {
                                 required: true,
-                                message: "Please input your Username!",
+                                message: "Please input your product Category!",
                             },
                         ]}
                     >
                         <Select
+                            placeholder="Select a category"
                             // onChange={handleChange}
-                            options={categoryValue}
+                            options={catList}
                         />
                     </Form.Item>
                 </Col>
@@ -192,7 +213,10 @@ function CreateNewProductForm({tableUpdater,setU,setOpen}) {
                 name="description"
                 label="Description"
                 rules={[
-                    { required: true, message: "Please input your Username!" },
+                    {
+                        required: true,
+                        message: "Please input your Description!",
+                    },
                 ]}
             >
                 <Input.TextArea rows={3} placeholder="Product Description" />
@@ -222,7 +246,7 @@ function CreateNewProductForm({tableUpdater,setU,setOpen}) {
                             {
                                 required: true,
                                 type: "number",
-                                message: "Please input your username!",
+                                message: "Please input your price!",
                             },
                         ]}
                     >
@@ -240,7 +264,7 @@ function CreateNewProductForm({tableUpdater,setU,setOpen}) {
                             {
                                 required: true,
                                 type: "number",
-                                message: "Please input your username!",
+                                message: "Please Enter Product weight!",
                             },
                         ]}
                     >
@@ -249,13 +273,13 @@ function CreateNewProductForm({tableUpdater,setU,setOpen}) {
                 </Col>
                 <Col span={10} offset={4}>
                     <Form.Item
-                        label="Stock Ammount"
+                        label="Stock Amount"
                         name="stock"
                         rules={[
                             {
                                 required: true,
                                 type: "number",
-                                message: "Please input your username!",
+                                message: "Please input Stock Amount!",
                             },
                         ]}
                     >
@@ -265,14 +289,26 @@ function CreateNewProductForm({tableUpdater,setU,setOpen}) {
             </Row>
 
             <Upload {...props}>
-                <Button icon={<UploadOutlined />}>Select File</Button>
+                <Button type="primary" ghost  style={{ width: "230px" ,marginBottom:'16px'}} icon={<UploadOutlined />}>
+                    Select File
+                </Button>
             </Upload>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit" onClick={handleUpload}>
-                    Submit
-                </Button>
-            </Form.Item>
+            <Row>
+                <Col span={12} offset={4}>
+                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                        <Button
+                            danger
+                            style={{ width: "100%" }}
+                            type="primary"
+                            htmlType="submit"
+                            onClick={handleUpload}
+                        >
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </Col>
+            </Row>
         </Form>
     );
 }

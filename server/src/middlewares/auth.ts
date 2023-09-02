@@ -6,6 +6,8 @@ const {JWT_KEY} = config;
 import { CustomRequest ,IUserPayload} from '../Interfaces/CustomRequest';
 export async function checkAuth(req :Request, res:Response, next:NextFunction) {
   try {
+  
+
     const cookies = req.cookies;
     const token = cookies.jwt;
     if (!token) {
@@ -25,4 +27,7 @@ export async function checkAuth(req :Request, res:Response, next:NextFunction) {
     return res.sendStatus(401);
   }
 }
+
+
+
 

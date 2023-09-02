@@ -10,7 +10,6 @@ const CustomInstance = axios.create({
         
     }
 });
-
 // CustomInstance.interceptors.response.use((res)=>{
 //     return res;
 // },(error)=>{
@@ -18,5 +17,6 @@ const CustomInstance = axios.create({
 //         // history.pushState(null,'','/login');
 //     }
 // });
+
 
 export default CustomInstance;

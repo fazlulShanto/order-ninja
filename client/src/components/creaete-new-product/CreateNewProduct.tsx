@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
+import { Button, Modal,Drawer } from 'antd';
 import CreateNewProductForm from './CreateNewProductForm';
 
 
 
-const CreateNewProduct: React.FC = ({tableUpdater,setU}) => {
+const CreateNewProduct: React.FC = ({updater} : any) => {
+  console.log(updater)
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState('Content of the modal');
@@ -32,10 +33,10 @@ const CreateNewProduct: React.FC = ({tableUpdater,setU}) => {
       <Button type="primary" onClick={showModal}>
         Add New Product
       </Button>
-      <Modal
+      <Drawer
         title="Add New Product"
         open={open}
-        onCancel={handleCancel}
+        onClose={handleCancel}
         // width={1000}
         width = "60%"
 
@@ -43,8 +44,8 @@ const CreateNewProduct: React.FC = ({tableUpdater,setU}) => {
     
         footer={null}
       >
-        <CreateNewProductForm setOpen= {setOpen} tableUpdater={tableUpdater} />
-      </Modal>
+        <CreateNewProductForm setOpen= {setOpen} updater={updater} />
+      </Drawer>
     </>
   );
 };

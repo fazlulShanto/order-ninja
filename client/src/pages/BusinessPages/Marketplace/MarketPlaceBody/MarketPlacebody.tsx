@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import { getALlProducts } from "../../../../services/Business/allProducts";
 import SingleProductCard from "../SingleProductCard/SingleProductCard";
 
+
 interface IMarketPlaceBody {
     query: string;
 }
 
-function MarketPlacebody({ query, category }) {
+function MarketPlacebody({ query  , category }  : any) {
     const [productList, setProductList] = useState([]);
 
     useEffect(() => {
@@ -20,19 +21,20 @@ function MarketPlacebody({ query, category }) {
     }, [query, category, productList.length]);
 
     return (
-        <div style={{ border: "1px solid red", marginTop: "8px" }}>
+        <div style={{  marginTop: "8px" }}>
+           
             <div>
-                <p>{query}</p>
-                <span>==========</span>
-                <p>{category}</p>
-                <span>{new Date().toLocaleTimeString()}</span>
+                {/* <p> search = {query}</p> */}
+                {/* <p>cat = {category}</p> */}
+                
+                {/* <span>{new Date().toLocaleTimeString()}</span> */}
             </div>
 
-            <div style={{display:'flex',gap : '4px'}}>
+            <div style={{display:'flex',gap : '16px',flexWrap:'wrap'}}>
                 {productList?.map((prdc) => {
                     // console.log(`=`.repeat(20));
                     // console.log(prdc);
-                    return <SingleProductCard productInfo={prdc} />;
+                    return <SingleProductCard key={Math.random()} productInfo={prdc} />;
                 })}
             </div>
         </div>

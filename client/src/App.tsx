@@ -12,6 +12,11 @@ import SellerProducts from "./pages/SellerPages/products/SellerProducts";
 import EditProduct from "./components/Edit-Product/EditProduct";
 import SellerProductView from "./components/ProductViewModal/SellerProductView";
 import BusinessMarketPlace from "./pages/BusinessPages/Marketplace/BusinessMarketPlace";
+import UserList from "./pages/AdminPages/admin users/UserList";
+import AdminLayout from "./layout/Admin/AdminLayout";
+import PlaceOrder from "./components/PlaceOrder/PlaceOrder";
+import { ShoppingCartProvider } from "./context/ShoppingCartContext";
+
 
 
 const App = () => {
@@ -40,12 +45,20 @@ const App = () => {
                     <Route element={<RoleGuard allowedRoles={["business"]} />}>
                         {/* <Route path="/admin-list-students" element={<BussinessDashboard />}/> */}
                         <Route path="/marketplace" element={<BusinessMarketPlace />}/>
+                        <Route path="/place-order" element={<PlaceOrder />}/>   
+                    </Route>
+
+                    <Route element={<RoleGuard allowedRoles={["admin"]} />}>
+                        {/* <Route path="/admin-list-students" element={<BussinessDashboard />}/> */}
+                        <Route element={<AdminLayout />}>
+                            <Route path="/user-list" element={<UserList />}/>                            
+                                                     
+                        </Route>
                     </Route>
 
                     <Route element={ <RoleGuard allowedRoles={["business", "admin", "supplier"]} />}>
                         <Route path="/dashboard" element={<DashboardController />}/>
-                        
-                    <Route path="/order" element={<OrderController />} />
+                        <Route path="/order" element={<OrderController />} />
 
                     </Route>
 

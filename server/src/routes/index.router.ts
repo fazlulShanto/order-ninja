@@ -7,6 +7,8 @@ import storeRouter from "./store.route";
 import cloudinaryRouter from "./cloudinary.route";
 import productRouter from "./product.route";
 import publicRouter from "./public.route";
+import cateogryRouter from "./admin/category.route";
+
 
 
 
@@ -20,6 +22,7 @@ indexRouter.get('/',(req,res)=>{
 
 indexRouter.use('/login',loginRoute);
 indexRouter.use('/register',registrationRouter);
+indexRouter.use('/category',cateogryRouter);
 // indexRouter.use('/register',registrationRouter);
 indexRouter.use('/public',publicRouter);
 

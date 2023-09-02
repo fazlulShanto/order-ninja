@@ -27,12 +27,13 @@ export async function handleLogin(req : Request,res:Response){
             password,
             dbUser!.password
           );
+          
         if(!isPasswordCorrect){
             return res.sendStatus(401);
         }
 
         const signedToken = jwt.sign(userObj,jwtSecret,{
-            expiresIn:'7d'
+            expiresIn:604800,
         });    
          
         // console.log('db result',userObj);

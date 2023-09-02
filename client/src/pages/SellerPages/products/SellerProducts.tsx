@@ -3,22 +3,27 @@ import style from './sellerproduct.module.css';
 import SellerLayout from '../../../layout/Seller/SellerLayout';
 import SellerProductTable from '../../../components/seller-product-table/SellerProductTable';
 import useAuth from '../../../hooks/useAuth';
-
-
+import CreateNewProduct from '../../../components/creaete-new-product/CreateNewProduct';
 
 
 function SellerProducts() {
-  const {upd,setUpd} = useAuth();
-  const [tableUpdate , setTableUpdate] = useState(0);
+
+  const [tableUpdate , setTableUpdate] = useState(false);
   
+  const handleTable = ()=>{
+    console.log('update table',new Date().toLocaleTimeString());
+    setTableUpdate(!tableUpdate);
+  }
+
   useEffect(()=>{
-    console.log(new Date().toLocaleTimeString());
-  },[tableUpdate,upd]);
+      console.log(`updating  : `,tableUpdate);
+  },[tableUpdate]);
+
   return (
     <SellerLayout>
         <div className={style['sellerProductContainer']}>
-            <SellerProductTable tableUpdater = {setTableUpdate} />
-
+            <CreateNewProduct updater = {handleTable} />
+            <SellerProductTable updateValue={tableUpdate} tableUpdater = {handleTable} />
         </div>
     </SellerLayout>
   );

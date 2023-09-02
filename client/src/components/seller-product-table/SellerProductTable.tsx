@@ -39,7 +39,7 @@ type DataIndex = keyof DataType;
 //     }
 // ];
 
-const SellerProductTable: React.FC< {tableUpdater : any} > = ({tableUpdater}) => {
+const SellerProductTable: React.FC< {tableUpdater : any} > = ({tableUpdater,updateValue}) => {
 
     const [viewProductModel,setViewProductModal] = useState(false);
 
@@ -81,7 +81,7 @@ const SellerProductTable: React.FC< {tableUpdater : any} > = ({tableUpdater}) =>
 
             console.log(er);
         })
-    },[productList.length,updc]);
+    },[productList.length,updc,updateValue]);
 
     const handleSearch = (
         selectedKeys: string[],
@@ -290,7 +290,6 @@ const SellerProductTable: React.FC< {tableUpdater : any} > = ({tableUpdater}) =>
 
     return (
         <div>
-            <CreateNewProduct setU = {setUpdc}  tableUpdater = {tableUpdater} />
             <Table columns={columns} dataSource={productList} />
         </div>
     );

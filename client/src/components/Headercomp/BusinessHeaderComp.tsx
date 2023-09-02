@@ -1,17 +1,23 @@
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
-import React from 'react';
+import React, { useContext } from 'react';
 import style from './headercomp.module.css';
 import { useNavigate } from 'react-router-dom';
 import UserProfile from '../user-profile/UserProfile';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
+
+
 
 // import useAuth from '../../Hooks/useAuth';
 // import Icontext from '../icon-text/Icontext';
 // import './headercomp.css';
 const dummyImage = `https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80`;
 
-export default function Headercomp({ pageName = 'Dashboard' }) {
+// const sho
+
+export default function BusinessHeaderComp({ pageName = 'Dashboard' }) {
     // const { userName } = useAuth();
+
+    
     const navi = useNavigate();
     const handleLogout = () => {
         localStorage.removeItem('loggedIn');
@@ -31,7 +37,8 @@ export default function Headercomp({ pageName = 'Dashboard' }) {
             <div className={style["userIconDiv"]}>
                 {/* <p>user name</p> */}
                 {/* <Icontext icon={<UserOutlined />} text={userName} /> */}
-                {/* {showCart ? <ShoppingCart /> : null} */}
+                <ShoppingCart />
+                
                  <UserProfile />
                 {/*<LogoutOutlined
                     rotate={-90}
@@ -48,3 +55,5 @@ export default function Headercomp({ pageName = 'Dashboard' }) {
         </div>
     );
 }
+
+

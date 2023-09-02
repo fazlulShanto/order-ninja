@@ -104,3 +104,12 @@ export async function updateUserById(userId : string,updatedUser : IUser){
         throw error;
     }
 }
+
+export async function getAllUsers(){
+    try {
+        const result = await userModel.find({}).exec();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}

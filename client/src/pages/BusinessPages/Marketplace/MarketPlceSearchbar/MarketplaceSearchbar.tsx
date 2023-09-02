@@ -2,8 +2,8 @@ import { Input } from 'antd';
 
 const { Search } = Input;
 
-function MarketplaceSearchbar({ onSearch }) {
-  const handleSearch = (value) => {
+function MarketplaceSearchbar({ onSearch } : any) {
+  const handleSearch = (value : any) => {
     onSearch(value);
   };
 

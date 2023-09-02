@@ -14,6 +14,7 @@ import appLogo from "../../../public/logo.png";
 import Headercomp from "../../components/Headercomp/Headercomp";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -48,6 +49,7 @@ const items: MenuItem[] = [
     getItem("Orders", "/order", <ShoppingCartOutlined style={iconStyle} />),
     getItem("Products", "/products", <ShoppingOutlined style={iconStyle} />),
     getItem("Manage", "/manage", <BarChartOutlined style={iconStyle} />),
+    getItem("User List", "/user-list", <BarChartOutlined style={iconStyle} />),
     getItem("Analytics", "/analytics", <DesktopOutlined style={iconStyle} />),
     // getItem("User", "sub1", <UserOutlined />, [
     //     getItem("Tom", "3"),
@@ -133,6 +135,8 @@ const AdminLayout: React.FC<Props> = (props) => {
                         }}
                     >
                         {props.children}
+                        <Outlet />
+                        
                     </div>
                 </Content>
             </Layout>

@@ -1,13 +1,18 @@
 import { Router,Request,Response } from "express";
 import { addNewProduct ,deleteProduct} from "../controllers/product.controller";
 import { getSingleProduct, getAllProducts } from "../models/products.model";
-import { getAllProductList } from "../controllers/public.controller";
+import { getAllProductList, getPublicUsers,productSearch } from "../controllers/public.controller";
 
 
 const publicRouter = Router();
 
 //get all product
 publicRouter.get('/product',getAllProductList);
+//get all users 
+publicRouter.get('/user',getPublicUsers);
+publicRouter.post('/search',productSearch);
+
+// publicRouter.get('/')
 // publicRouter.post('/product/search',getStoreProduct);
 
 //a single store product

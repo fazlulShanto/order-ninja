@@ -7,6 +7,7 @@ import { getCategories ,deleteCategory, addCategories} from '../models/category.
 export async function getCatList(req : Request,res:Response){
     try {
         const dbResut = await getCategories();
+
         return res.status(200).json(dbResut);
     } catch (error) {
         throw error;
@@ -14,14 +15,15 @@ export async function getCatList(req : Request,res:Response){
 }
 export async function addCatList(req : Request,res:Response){
     try {
-        const {name} = req.body;
+        const {name,image} = req.body;
+
+        // console.log('this is not good');
         if(!name){
             return res.status(404).json({
                 error : "no store id provied"
             });
         }
-        const dbResut = await addCategories(name);
-        
+        const dbResut = await addCategories(name,image);
         return res.status(200).json(dbResut);
     } catch (error) {
         throw error;

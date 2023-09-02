@@ -14,6 +14,9 @@ import appLogo from "../../../public/logo.png";
 import Headercomp from "../../components/Headercomp/Headercomp";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import BusinessHeaderComp from "../../components/Headercomp/BusinessHeaderComp";
+import { ShoppingCartProvider } from "../../context/ShoppingCartContext";
+
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -76,6 +79,7 @@ const BusinessLayout: React.FC<Props> = (props) => {
     } = theme.useToken();
 
     return (
+        <ShoppingCartProvider>
         <Layout style={{ minHeight: "100vh" }}>
             <Sider
                 style={{ position: "relative"}}
@@ -111,7 +115,7 @@ const BusinessLayout: React.FC<Props> = (props) => {
             </Sider>
 
             <Layout>
-                <Headercomp pageName={selectedKeys} />
+                <BusinessHeaderComp pageName={selectedKeys} />
                 <Content style={{ margin: "0 16px" }}>
                     <div
                         style={{
@@ -125,6 +129,7 @@ const BusinessLayout: React.FC<Props> = (props) => {
                 </Content>
             </Layout>
         </Layout>
+        </ShoppingCartProvider>
     );
 };
 
