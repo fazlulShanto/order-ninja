@@ -64,7 +64,7 @@ const items: MenuItem[] = [
 ];
 
 const siderBottomItem: MenuItem[] = [
-    getItem("Settings", "/settings", <SettingOutlined style={iconStyle} />),
+    // getItem("Settings", "/settings", <SettingOutlined style={iconStyle} />),
     getItem("Logout", "/logout", <LoginOutlined style={iconStyle} />),
 ];
 

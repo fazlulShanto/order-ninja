@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema<IProduct>({
     timestamps : true
 });
 
-const productModel = mongoose.model<IProduct>('product',productSchema);
+export const productModel = mongoose.model<IProduct>('product',productSchema);
 
 export async function getProductsByStore(storeId:string){
     try {

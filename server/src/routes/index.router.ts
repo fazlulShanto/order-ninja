@@ -8,17 +8,23 @@ import cloudinaryRouter from "./cloudinary.route";
 import productRouter from "./product.route";
 import publicRouter from "./public.route";
 import cateogryRouter from "./admin/category.route";
-
-
+import pathaoRouter from "./pathao.route";
+import orderRoute from "./order.route";
 
 
 
 
 const indexRouter = Router();
+
+
+
 indexRouter.use(cloudinaryRouter);
 indexRouter.get('/',(req,res)=>{
     res.send('Order Ninja Server.');
 });
+
+indexRouter.use('/pathao',pathaoRouter);
+
 
 indexRouter.use('/login',loginRoute);
 indexRouter.use('/register',registrationRouter);
@@ -28,6 +34,7 @@ indexRouter.use('/public',publicRouter);
 
 indexRouter.use(checkAuth);
 indexRouter.use('/user',userRoute);
+indexRouter.use('/order',orderRoute);
 indexRouter.use('/store',storeRouter);
 indexRouter.use('/product',productRouter);
 

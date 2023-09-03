@@ -7,9 +7,13 @@ export interface IUser{
     role : string,
     password:string,
     email:string,
+    city?:string,
+    zone ?: string,
+    area ?: string,
     phone ?: string,
     address ?:string,
-    avatar ?: string
+    avatar ?: string,
+    store_name ?: string
 }
 
 const userSchema = new mongoose.Schema<IUser>({
@@ -18,11 +22,15 @@ const userSchema = new mongoose.Schema<IUser>({
     last_name : String,
     role : String,
     store_id:String,
+    store_name: String,
     password : String,
     email : {
         type : String,
         unique:true
     },
+    city : String,
+    zone : String,
+    area : String,
     phone : String,
     address : String,
     avatar : String

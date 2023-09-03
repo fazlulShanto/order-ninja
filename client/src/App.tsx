@@ -16,6 +16,7 @@ import UserList from "./pages/AdminPages/admin users/UserList";
 import AdminLayout from "./layout/Admin/AdminLayout";
 import PlaceOrder from "./components/PlaceOrder/PlaceOrder";
 import { ShoppingCartProvider } from "./context/ShoppingCartContext";
+import SettingsController from "./page-controller/SettingsController";
 
 
 
@@ -59,6 +60,7 @@ const App = () => {
                     <Route element={ <RoleGuard allowedRoles={["business", "admin", "supplier"]} />}>
                         <Route path="/dashboard" element={<DashboardController />}/>
                         <Route path="/order" element={<OrderController />} />
+                        <Route path="/settings" element={<SettingsController />} />
 
                     </Route>
 

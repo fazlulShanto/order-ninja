@@ -18,9 +18,7 @@ const SingleCartItem: React.FC<ISingleCartComp> = ({ itemId, quantity }) => {
 
     const handleUp = ()=>{
 
-        if(quantity){
-
-        }
+        
 
         console.log(`up for `,itemData.name);
         increaseCartQuantity(itemData.id);
