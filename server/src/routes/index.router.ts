@@ -10,6 +10,7 @@ import publicRouter from "./public.route";
 import cateogryRouter from "./admin/category.route";
 import pathaoRouter from "./pathao.route";
 import orderRoute from "./order.route";
+import paymentRoute from "./payment.route";
 
 
 
@@ -23,7 +24,11 @@ indexRouter.get('/',(req,res)=>{
     res.send('Order Ninja Server.');
 });
 
+
+
 indexRouter.use('/pathao',pathaoRouter);
+
+indexRouter.use(`/payment`,paymentRoute);
 
 
 indexRouter.use('/login',loginRoute);
@@ -33,6 +38,8 @@ indexRouter.use('/category',cateogryRouter);
 indexRouter.use('/public',publicRouter);
 
 indexRouter.use(checkAuth);
+
+
 indexRouter.use('/user',userRoute);
 indexRouter.use('/order',orderRoute);
 indexRouter.use('/store',storeRouter);

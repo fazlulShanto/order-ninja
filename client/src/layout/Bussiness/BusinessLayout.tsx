@@ -49,7 +49,7 @@ const iconStyle = { fontSize: "20px", color: "#73fbfd" };
 const items: MenuItem[] = [
     getItem("Marketplace", "/marketplace", <HomeOutlined style={iconStyle} />),
     getItem("Orders", "/order", <ShoppingCartOutlined style={iconStyle} />),
-    getItem("Products", "/products", <ShoppingOutlined style={iconStyle} />),
+    // getItem("Products", "/products", <ShoppingOutlined style={iconStyle} />),
 ];
 
 const siderBottomItem: MenuItem[] = [

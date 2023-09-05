@@ -15,7 +15,6 @@ function OrderShippingAddress({ handleShipping, next }) {
 
     const [showDate,setShowDate] = useState(false);
 
-
     const handleDeliverySelect = (v)=>{
       if(v=='weekly'){
         setShowDate(true);
@@ -115,7 +114,7 @@ function OrderShippingAddress({ handleShipping, next }) {
                         </Form.Item>
                     </Col>
                     <Col offset={4} span={10}>
-                        <Form.Item name="Phone" label="phone">
+                        <Form.Item name="phone" label="Phone">
                             <Input />
                         </Form.Item>
                     </Col>

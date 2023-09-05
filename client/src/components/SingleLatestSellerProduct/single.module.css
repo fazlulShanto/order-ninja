@@ -1,9 +1,26 @@
 .latest-sell-product-div{
     display: flex;
     flex-direction: row;
-    /* border: 1px solid white; */
     padding: 3px 6px;
     justify-content: space-between;
     align-items: center;
+}
+
+.productIdx{
+    width: 10% ;
+    height: 32px;
     /* border: 1px solid red; */
+}
+.name-div{
+    width: 60%;
+    text-align: center;
+    /* border: 1px solid red; */
+}
+
+img{
+    border-radius: 20%;
+}
+
+.product-percentage{
+    height: 32px;
 }

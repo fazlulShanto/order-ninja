@@ -14,17 +14,17 @@ function UserAvatar(){
 
     return (
         <div style={{display:'flex',alignItems:'center',gap : '8px'}}>
-            <Avatar  src={url}  style={{height:'60px',width:'60px'}}  />
+            <Avatar  src={url}  style={{height:'50px',width:'50px'}}  />
             <div>
 
-            <p style={{fontSize:'1.1rem',fontWeight:'500'}} >
+            <p style={{fontSize:'1rem',fontWeight:'500'}} >
                 {userData.name}
             </p>
-            <p style={{fontSize:'.9rem',fontWeight:'500'}} >
+            <p style={{fontSize:'.85rem',fontWeight:'500'}} >
                 {userData.role}
                 </p>
             </div>
-            <DownOutlined />
+            {/* <DownOutlined /> */}
         </div>
     );
 }

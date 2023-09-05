@@ -70,7 +70,7 @@ function PlaceOrder() {
                 }}
             >
                 {steps[current].content}
-                {JSON.stringify(shipping)}
+                {/* {JSON.stringify(shipping)} */}
             </div>
 
             <div style={{ marginTop: 24 }}>

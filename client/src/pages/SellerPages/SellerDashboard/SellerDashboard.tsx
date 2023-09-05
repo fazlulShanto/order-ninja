@@ -17,7 +17,7 @@ function SellerDashboard() {
     return (
         <SellerLayout>
             {/* 90 vh here */}
-            {/* 30 vh */}
+            {/* 27 vh */}
             <SellerStatsContainer />
             {/* 57vh */}
             <div className={[style["plotContainer"]].join(" ")}>

@@ -1,26 +1,36 @@
 import mongoose from "mongoose";
-type OrderStatusType = "completed" | "pending";
+import { generateUUID } from "../utils/generic.util";
+type OrderStatusType = "delivered"| "confirmed" | "pending";
 export interface IOrder{
-    id : String,
-    store_id : String,
-    address : String,
+    id : string,
+    user_id : string,
+    address : object,
     status : OrderStatusType
-    user_id : String,
     unit_size : number,
     price : number,
-    total_price : number
+    items : object,
+    weight : number,
+    order_type : string,
+    order_date : Date,
+    suplier_orders  : object,
 }
 
 const orderSchema = new mongoose.Schema<IOrder>(
     {
         id : String,
-        store_id : String,
-        address: String,
-        status:String,
         user_id:String,
+        address: Object,
+        status:{
+            type:'string',
+            default:'pending'
+        },
         unit_size : String,
         price : Number,
-        total_price : Number
+        items : Array,
+        weight : Number,
+        order_type : String,
+        order_date : Date,
+        suplier_orders: Array
     },{
         timestamps : true
     }
@@ -52,4 +62,15 @@ export async function getOrdersByDate(date:string){
         throw error;
     }
 }
+
+export async function createUserOrder(ordeObj :IOrder){
+    try {
+        console.log(ordeObj);
+        const id = await generateUUID();
+        // return userOrderList;
+    } catch (error) {
+        throw error;
+    }
+}
+
 

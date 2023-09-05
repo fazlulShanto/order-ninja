@@ -33,12 +33,13 @@ export async function handleLogin(req : Request,res:Response){
         }
 
         const signedToken = jwt.sign(userObj,jwtSecret,{
-            expiresIn:604800,
+            expiresIn:30 * 24*3600000,
         });    
          
         // console.log('db result',userObj);
         res.cookie('jwt',signedToken,{
             httpOnly:true,
+            maxAge : 30 * 24*3600000
         });
         res.cookie('user_id',dbUser.id);
 

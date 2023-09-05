@@ -1,0 +1,78 @@
+import  {  Request, Response } from "express";
+
+import stripe from "stripe";
+import { getSingleProduct } from "../models/products.model";
+
+
+// --- env ---
+export const paymentController = async (req: Request, res: Response) => {
+  try {
+
+    const { user_id,address,order_type,price,order_date,items } = req.body;
+
+    const stripeSecretKey = process.env.STRIPE_SECRET;
+
+    if (!stripeSecretKey) {
+      throw new Error("Stripe Secret Key not found in environment variables");
+    }
+
+    const stripeClient = new stripe(stripeSecretKey, {
+      apiVersion: "2023-08-16",
+    });
+    
+
+    const rawProduct : any= [];
+    for(let i =0;i<items.length;i++){
+        const prd = await getSingleProduct(items[i].id);
+
+        const newObj = {
+            price_data : {
+                currency : "usd",
+                product_data : {
+                    name : prd.name,
+                    images : prd.images
+                },
+                unit_ammount : prd.price*items[i].quantity
+            },
+            quantity : items[i].quantity
+        }
+
+        rawProduct.push(newObj);
+    }
+
+    // const lineItems = items.map((v : any) =>{
+    //     return ({
+    //         price_data:{
+    //             currency:"usd",
+    //             product_data:{
+    //                 name:v.id,
+    //                 images:[`https://gravatar.com/avatar/3dec4af0efb302ba0610ea2405ae5750?s=200&d=robohash&r=x`]
+    //             },
+    //             unit_amount: 69 * 100,
+    //         },
+    //         quantity:v.quantity
+    //     });
+    // })
+
+
+
+
+    console.log(rawProduct);
+
+
+    const session = await stripeClient.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: rawProduct,
+      mode: "payment",
+      success_url:`${process.env.CLIENT_URL}/success`,
+      cancel_url: `${process.env.CLIENT_URL}/cancel`,
+    });
+
+
+
+    return res.send({ id: session?.id });
+
+  } catch (error) {
+    console.log(error);
+  }
+};

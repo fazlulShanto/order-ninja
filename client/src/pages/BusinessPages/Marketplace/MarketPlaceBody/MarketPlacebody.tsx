@@ -2,6 +2,7 @@ import { Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { getALlProducts } from "../../../../services/Business/allProducts";
 import SingleProductCard from "../SingleProductCard/SingleProductCard";
+import CustomInstance from "../../../../lib/axios";
 
 
 interface IMarketPlaceBody {
@@ -13,9 +14,12 @@ function MarketPlacebody({ query  , category }  : any) {
 
     useEffect(() => {
         const pd = async () => {
-            const result = await getALlProducts();
-            // console.log('✨✨🎇🎆',typeof result);
-            setProductList(result);
+            // const result = await getALlProducts();
+            const {data} = await CustomInstance.get(`/public/search?q=${query}&cat=${category}`);
+            console.log(`query  :${query}   category : ${category}`)
+            // console.log('✨✨🎇🎆',re);
+            // console.log(result);
+            setProductList(data);
         };
         pd();
     }, [query, category, productList.length]);
@@ -23,12 +27,12 @@ function MarketPlacebody({ query  , category }  : any) {
     return (
         <div style={{  marginTop: "8px" }}>
            
-            <div>
-                {/* <p> search = {query}</p> */}
-                {/* <p>cat = {category}</p> */}
+            {/* <div>
+                <p> search = {query}</p>
+                <p>cat = {category}</p>
                 
-                {/* <span>{new Date().toLocaleTimeString()}</span> */}
-            </div>
+                <span>{new Date().toLocaleTimeString()}</span>
+            </div> */}
 
             <div style={{display:'flex',gap : '16px',flexWrap:'wrap'}}>
                 {productList?.map((prdc) => {

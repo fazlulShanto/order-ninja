@@ -48,7 +48,7 @@ const items: MenuItem[] = [
     getItem("Order", "/order", <ShoppingCartOutlined style={iconStyle} />),
     getItem("Products", "/products", <ShoppingOutlined style={iconStyle} />),
     getItem("Sales Report", "/report", <BarChartOutlined style={iconStyle} />),
-    getItem("Analytics", "/analytics", <DesktopOutlined style={iconStyle} />),
+    // getItem("Analytics", "/analytics", <DesktopOutlined style={iconStyle} />),
     // getItem("User", "sub1", <UserOutlined />, [
     //     getItem("Tom", "3"),
     //     getItem("Bill", "4"),

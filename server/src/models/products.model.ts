@@ -8,6 +8,7 @@ export interface IProduct {
     category : string[],
     price : number,
     stock:number,
+    sold : number,
     description  : string,
     images : string[],
     unit_size:string,
@@ -20,7 +21,14 @@ const productSchema = new mongoose.Schema<IProduct>({
     name : String,
     category : Array,
     price : Number,
-    stock : Number,
+    stock : {
+        type:'number',
+        min:0
+    },
+    sold:{
+        type:'number',
+        default : 0
+    },
     description : String,
     images : Array,
     reviews : Array,
@@ -42,10 +50,10 @@ export async function getProductsByStore(storeId:string){
     }
 }
 
-export async function getSingleProduct(productId : string){
+export async function getSingleProduct(productId : string) :Promise<IProduct> {
     try {  
         const product = await productModel.findOne({id : productId}).exec();
-        return product;
+        return product!;
     } catch (error) {
         throw error;
     }
@@ -83,9 +91,44 @@ export async function updateSingleProduct(productId :string,newObj : any){
 
 export async function getAllProducts(){
     try {
-        const res = await productModel.find({});
+        const res = await productModel.aggregate([
+            {
+                $match:{
+
+                }
+            },
+            {
+                $lookup:{
+                    from:'stores',
+                    localField:'store_id',
+                    foreignField:'id',
+                    as : "store"
+                }
+            }
+        ]);
         return res;
     } catch (error) {
         throw error;
     }
 }
+
+export async function searchProducts(category : any,text : any){
+
+    const filter : any = {};
+  if (text) {
+    filter.name = { $regex: text.trim(), $options: 'i' };
+  }
+
+  // Add category search criteria if provided
+  if (category) {
+    filter.category = { $in: category };
+  }
+
+  try {
+    const results = await productModel.find(filter);
+    return results;
+  } catch (error) {
+    throw error;
+  }
+}
+

@@ -1,5 +1,7 @@
 import { Router } from "express";
-import { getSupplierStoreDashboard } from "../controllers/store.controller";
+import { getSupplierStats } from "../controllers/store.controller";
+
+
 
 const storeRouter = Router();
 
@@ -8,7 +10,7 @@ storeRouter.get('/',(req,res)=>{
    return res.send("Store router home!");
 });
 
-storeRouter.get('/dashboard',getSupplierStoreDashboard);
+storeRouter.get('/stats/:store_id',getSupplierStats);
 
 
 export default storeRouter;

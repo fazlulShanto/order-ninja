@@ -1,10 +1,13 @@
 import { Router,Request,Response } from "express";
-import { getStoreProduct,addNewProduct ,deleteProduct} from "../controllers/product.controller";
+import { getStoreProduct,addNewProduct ,deleteProduct, getAllProductList} from "../controllers/product.controller";
 import { getSingleProduct, updateSingleProduct } from "../models/products.model";
 
 
 const productRouter = Router();
 
+
+
+productRouter.get('/',getAllProductList);
 productRouter.get('/:storeId',getStoreProduct);
 productRouter.post('/:storeId',addNewProduct);
 
@@ -31,7 +34,7 @@ productRouter.post('/update/:productId', async (req:Request,res: Response)=>{
         oldProduct!.description = req.body.description;
         oldProduct!.price = req.body.price;
         oldProduct!.weight = req.body.weight;
-        oldProduct!.stock = req.body.stock;
+        oldProduct!.stock = req.body.stock + req.body.new_stock;
 
         const updatedProduct = updateSingleProduct(productId,oldProduct);
 

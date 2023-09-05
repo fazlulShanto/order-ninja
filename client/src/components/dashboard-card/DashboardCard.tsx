@@ -26,7 +26,6 @@ function DashboardCard({icon,cardBg ,statBg ,cardTitle,cardFigure,cardStats} : a
     {icon}
     <h2 className={style['cardHeader']} > {cardFigure} </h2>
     <p className={style['cardTitle']}>{cardTitle}</p>
-    <p  className={style['cardStat']} > {cardStats} </p>
   </Card>
   );
 }

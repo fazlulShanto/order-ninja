@@ -1,5 +1,5 @@
 import {Request,Response} from 'express';
-import { createSingleProduct, getProductsByStore,deleteSingleProduct } from '../models/products.model';
+import { createSingleProduct, getProductsByStore,deleteSingleProduct, getAllProducts } from '../models/products.model';
 import { generateUUID } from '../utils/generic.util';
 import { IProduct } from '../models/products.model';
 
@@ -34,6 +34,7 @@ export async function addNewProduct(req : Request, res : Response){
             weight : req.body.weight,
             unit_size:req.body.unit_size,
             stock  : req.body.stock,
+            sold:0,
             description : req.body.description,
             images : req.body.images,
             reviews : [] 
@@ -52,6 +53,15 @@ export async function deleteProduct(req:Request,res : Response){
         console.log(`here : pid = ${pid}`)
         const result = await deleteSingleProduct(pid);
         return res.send("done");
+    } catch (error) {
+        return res.send("can't not delete");
+    }
+}
+export async function getAllProductList(req:Request,res : Response){
+    try {
+        
+        const result = await getAllProducts();
+        return res.json(result);
     } catch (error) {
         return res.send("can't not delete");
     }

@@ -10,7 +10,8 @@ const publicRouter = Router();
 publicRouter.get('/product',getAllProductList);
 //get all users 
 publicRouter.get('/user',getPublicUsers);
-publicRouter.post('/search',productSearch);
+// publicRouter.post('/search',productSearch);
+publicRouter.get('/search',productSearch);
 
 // publicRouter.get('/')
 // publicRouter.post('/product/search',getStoreProduct);
@@ -19,9 +20,8 @@ publicRouter.post('/search',productSearch);
 
 //get a single prodcut
 
-
-
 // publicRouter.get('/:storeId',getStoreProduct);
+
 publicRouter.get('/single/:productId', async (req:Request,res: Response)=>{
     try {
         const {productId} = req.params;
@@ -33,5 +33,5 @@ publicRouter.get('/single/:productId', async (req:Request,res: Response)=>{
     }
 });
 
-
+// publicRouter.post('/search',productSearch);
 export default publicRouter;

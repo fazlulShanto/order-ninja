@@ -263,8 +263,25 @@ function EditProduct() {
                 </Col>
                 <Col span={10} offset={4}>
                     <Form.Item
-                        label="Stock Ammount"
+                        label="Stock Amount"
                         name="stock"
+                        
+                        rules={[
+                            {
+                                required: true,
+                                type: "number",
+                                message: "Please input your username!",
+                            },
+                        ]}
+                    >
+                        <InputNumber disabled style={{ width: "100%" }} />
+                    </Form.Item>
+                </Col>
+                <Col span={10} offset={0}>
+                    <Form.Item
+                        label="Add new Stock"
+                        name="new_stock"
+                        
                         rules={[
                             {
                                 required: true,

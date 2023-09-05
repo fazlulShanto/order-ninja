@@ -77,6 +77,7 @@ export async function getUserByEmail(email : string){
 
 export async function createUser(userObj : IUser){
     try {
+        // console.log(`==========user obj`,userObj)
         const result = await userModel.create(userObj);
         return true;
     } catch (error) {

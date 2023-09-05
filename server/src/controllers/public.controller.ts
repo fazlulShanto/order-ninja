@@ -1,5 +1,5 @@
 import { Request,Response, response } from "express";
-import { getAllProducts } from "../models/products.model";
+import { getAllProducts, searchProducts } from "../models/products.model";
 import { getAllUsers } from "../models/user.model";
 
 
@@ -14,20 +14,10 @@ export async function getAllProductList(req:Request,res : Response){
 }
 export async function productSearch(req:Request,res : Response){
     try {
-        const {search,category} = req.body;
-        let productList =  await getAllProducts();
-        if(category){
-            productList = productList.filter( prdc =>{
-                return prdc.category.includes(category);
-            });
-        }
-        if(search){
-            productList = productList.filter( prdc =>{
-                return prdc.name.includes(search);
-            });
-        }
-        return res.json(productList);
+        const {q,cat} = req.query;
+        const result =await searchProducts(cat,q);
 
+        res.json(result);
     } catch (error) {
         return [];
     }

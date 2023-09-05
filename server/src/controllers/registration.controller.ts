@@ -9,7 +9,7 @@ export async function newUserController(req : Request,res:Response){
     try {
         const saltRounds = process.env.SALT_ROUND!;
 
-        console.log(req.body);
+        // console.log(req.body);
         //extract data
         const {first_name,last_name,isbussiness,password,email} = req.body;
         //check if user already exists
@@ -22,6 +22,8 @@ export async function newUserController(req : Request,res:Response){
 
         const id = await generateUUID();
         const role = isbussiness ?  "business" : "supplier";
+
+        // console.log('i am here')
         //has password
 
         const hassedPassword = await bcrypt.hash(password, parseInt(saltRounds));
@@ -36,7 +38,7 @@ export async function newUserController(req : Request,res:Response){
         };
         
         if(role=='supplier'){
-            const drd = await createStore(id);
+            const drd = await createStore(id,first_name+' '+last_name);
             userObj.store_id = drd.id;
             console.log('new store created',userObj);
         }

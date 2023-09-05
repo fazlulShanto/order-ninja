@@ -8,7 +8,7 @@ import MarketProductCategory from "./MarketPlaceCategory/MarketProductCategory";
 
 function BusinessMarketPlace() {
     const [searchQuery, setSearchQuery] = useState("");
-    const [category, setCategory] = useState(null);
+    const [category, setCategory] = useState('');
     const [cart,setCart] = useState({});
     const [update,forceUpdate] = useState(Date.now());
     const store = {};
@@ -19,7 +19,12 @@ function BusinessMarketPlace() {
     };
     const handleCategory = (value: object) => {
       console.log(`selected `,value);
-      setCategory(value);
+      setCategory((prv)=>{
+        if(prv == value.id){
+            return '';
+        }
+        return value.id;
+      });
     };
 
 
@@ -31,7 +36,7 @@ function BusinessMarketPlace() {
                 </Col>
             </Row>
             <Row>
-                <MarketProductCategory onCatChange={handleCategory}  />
+                <MarketProductCategory selected = {category} onCatChange={handleCategory}  />
             </Row>
 
             <MarketPlacebody query={searchQuery} category={category} />

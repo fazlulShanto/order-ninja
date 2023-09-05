@@ -7,6 +7,10 @@ import {
   BarElement,
   Tooltip,
 } from 'chart.js';
+import { useEffect, useState } from 'react';
+import CustomInstance from '../lib/axios';
+import { Switch } from 'antd';
+
 
 ChartJS.register(
   CategoryScale,
@@ -17,12 +21,43 @@ ChartJS.register(
 
 
 const SellerWeeklyChart = () => {
+
+  const [labels,setLabels] = useState([]);
+  const [labelText,setLabelText]  = useState('sales');
+  const [orderData,setOrderData] = useState([]);
+  const [salesData,setSalesData] = useState([]);
+  const [dataset,SetData] = useState([]);
+  const {store_id} = JSON.parse(localStorage.getItem('raw_user')!);
+
+  useEffect(()=>{
+
+    const getWeeklyStats = async ()=>{
+        const {data : stats} = await CustomInstance.get(`/order/stats/${store_id}`);
+        
+        const lab  = stats.map( v => v.weekday);
+        setLabels(lab);
+        const ds = stats.map( v => v.price);
+        setSalesData(ds);
+        SetData(ds);
+        const ord = stats.map(v => v.order);
+        setOrderData(ord);
+
+        console.log('💥💥💥💥',stats);
+    }
+    console.log(store_id);
+    getWeeklyStats();
+
+  },[])
+
+
   const data = {
-    labels: ['Sat', 'Sun', 'Mon', 'Tues', 'Wed', 'Thr','Fri'],
+    // labels: ['Sat', 'Sun', 'Mon', 'Tues', 'Wed', 'Thr','Fri'],
+    labels:labels,
     datasets: [
       {
-        label: 'Sales',
-        data: [12, 19, 3, 5, 2, 3,30],
+        label: labelText,
+        data: dataset,
+        // data: [12, 19, 3, 5, 2, 3,30],
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
@@ -56,6 +91,18 @@ const SellerWeeklyChart = () => {
   };
 // };
 
+  const handleSwitch = (chcked : boolean) : void =>{
+
+    //false = sales
+    //true = orders
+    if(chcked){
+      SetData(orderData);
+    }else{
+      SetData(salesData);
+    }
+    // console.log(`🥇🥋🥇`,chcked);
+  }
+
   // return (
   //   <div style={{height:'200px',marginBottom:'16px'}}>
   //     <h3>Sales Data</h3>
@@ -64,7 +111,10 @@ const SellerWeeklyChart = () => {
   // );
   return (
     <div >
-      <h3>Sales Data</h3>
+     <div style={{display:'flex',height:'27px',alignItems:'center'}}>
+     <h3 style={{marginRight:'4px'}}>Weekly Data by :</h3>
+      <Switch checkedChildren="orders" onChange={(chk,ev)=> handleSwitch(chk)} unCheckedChildren="sales"  size='small'/>
+     </div>
       <Bar  style={{ minHeight : "150px",maxHeight:'200px', width:"auto",backgroundColor:'aliceblue'}} data={data} options={options} />
     </div>
   );

@@ -12,9 +12,9 @@ interface DataType {
   tags: string[];
 }
 
-function AdminOrders() {
+function BusinessOrders() {
 
-  const store_id = JSON.parse(localStorage.getItem('raw_user')!)['store_id'];
+  const userId = localStorage.getItem('user_id');
 
   const [orderList ,setOrderList] = useState([]);
   const [upd,setUpd] = useState(Date.now());
@@ -22,7 +22,7 @@ function AdminOrders() {
   useEffect(()=>{
     const getOrderlist = async ()=>{
 
-      const res = await CustomInstance.get(`/order/store/${store_id}`);
+      const res= await CustomInstance.get(`/order/user/${userId}`);
       console.log(res.data);
 
       setOrderList(res.data);
@@ -46,7 +46,10 @@ function AdminOrders() {
       key: 'image',
       render:(_,obj : any)=>{
                 // console.log(_)
-                const dfltUrl  = obj.images[0] ?? `https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y`;
+                const dfltUrl  = obj.product[0].images[0] ?? `https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y`;
+
+                // console.log(`🎍🎆🎆🎆🎇✨✨🎃🎊🎇`,obj.product[0].images[0])
+                // const dfltUrl  = obj.images[0] ?? `https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y`;
 
                 return (<Avatar key={Math.random()} shape="square" size={64} src={dfltUrl} />)
             },
@@ -71,9 +74,9 @@ function AdminOrders() {
       key: 'quantity',
     },
     {
-      title: 'Current Stock',
-      dataIndex: 'stock',
-      key: 'quantity',
+      title: 'Weight',
+      dataIndex: 'total_weight',
+      key: 'quantity1',
     },
     {
       title: 'Order Type',
@@ -100,37 +103,16 @@ function AdminOrders() {
         }
       },
       key: 'status',
-    },
-    {
-      title: 'Action',
-      key: 'tags',
-      render: (_,element) => (
-       
-            <Button disabled={element?.status !='pending'} >
-              
-              <Popconfirm
-                                title="Confirm this Order ?"
-                                // description="Are you sure to Confirm this order?"
-                                onConfirm={()=> handleConfim((element as any))}
-                                // onCancel={cancel}
-                                okText="Yes"
-                                cancelText="No"
-                            >
-                                Confirm
-                            </Popconfirm>
-              
-              </Button>
-         
-      )
-
     }
   ];
   
   return (
-    <div>
-        {orderList.length ? <Table size='small'  columns={columns} dataSource={orderList} /> : null}
+    <div >
+        {orderList.length ? <Table pagination={{defaultPageSize:7}} columns={columns} dataSource={orderList} /> : null}
     </div>
   )
 }
 //  
-export default AdminOrders;
+export default BusinessOrders
+
+

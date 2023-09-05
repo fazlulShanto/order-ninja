@@ -77,13 +77,13 @@ export async function deleteStoreById(storeId : string){
     }
 }
 
-export async function createStore(userId :string){
+export async function createStore(userId :string,name : string = ''){
     const id = await generateUUID();
     try {
         const store = await storeModel.create({
             owner_id: userId,
             id:id,
-            name : '',
+            name : name,
         });
         return store;
     } catch (error) {

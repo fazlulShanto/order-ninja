@@ -70,7 +70,6 @@ const SellerProductTable: React.FC< {tableUpdater : any} > = ({tableUpdater,upda
         setUpdc(Date.now());
         console.log(tableUpdater)
         console.log(res);
-
     }
     useEffect(()=>{
         console.log('here')
@@ -219,6 +218,7 @@ const SellerProductTable: React.FC< {tableUpdater : any} > = ({tableUpdater,upda
         {
             title: "Current Stock",
             dataIndex: "stock",
+            render:(_,el)=> el.stock-el.sold,
             key: "stock",
             sorter: (a : any, b : any) => a.stock- b.stock,
             // sortDirections: ["descend", "ascend"],
@@ -290,7 +290,7 @@ const SellerProductTable: React.FC< {tableUpdater : any} > = ({tableUpdater,upda
 
     return (
         <div>
-            <Table columns={columns} dataSource={productList} />
+            <Table size="small" columns={columns} dataSource={productList} />
         </div>
     );
 };
