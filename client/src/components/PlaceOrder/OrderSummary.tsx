@@ -135,7 +135,7 @@ function OrderSummary({ setTotal ,next,shipping}) {
             </Row>
             <Row>
             <Button disabled={loading} onClick={()=> next()} style={{width:'100%',marginTop:'16px'}} type="primary">
-                Pay Now
+                Next
             </Button>
                 
             </Row>

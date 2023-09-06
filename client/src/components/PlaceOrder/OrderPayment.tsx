@@ -15,9 +15,6 @@ function OrderPayment({next,amount,shipping}) {
 
         //place the order 
         // console.log(shipping)
-
-        const orderPlace =async () => {
-
             const orderData = {
                 user_id  : localStorage.getItem('user_id'),
                 address : {
@@ -32,20 +29,17 @@ function OrderPayment({next,amount,shipping}) {
                 order_date : shipping['order_date'],
                 items :[...cartItems]
             };
-
-            console.log(orderData);
-
-            // const requ = await CustomInstance.post(`/order/create`,orderData);
-        };
-        orderPlace();
-
+            // console.log(orderData);
+            try {
+                
+                const requ = await CustomInstance.post(`/order/create`,orderData);
+                localStorage.removeItem('shopping-cart');
+            } catch (error) {
+                console.log(error);
+            }
     }
 
-    useEffect(()=>{
-
-
-
-    },[]);
+    
 
     const makePayment = async()=>{
         const stripe = await loadStripe(PUBLIK_KEY);
@@ -66,6 +60,7 @@ function OrderPayment({next,amount,shipping}) {
         };
 
         const {data : session} = await CustomInstance.post(`/payment`,orderData);
+        await createOrder();
 
         const result =await stripe?.redirectToCheckout({
             sessionId : session.id
@@ -80,8 +75,8 @@ function OrderPayment({next,amount,shipping}) {
 
   return (
     <div>
-        <h3>  {amount}  </h3>
-        <Button onClick={makePayment}>Pay done</Button>
+        {/* <h3>  {amount}  </h3> */}
+        <Button type='primary' size='large' onClick={makePayment}>Pay With Stripe</Button>
 
     </div>
   )

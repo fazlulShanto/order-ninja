@@ -2,6 +2,7 @@ import  {  Request, Response } from "express";
 
 import stripe from "stripe";
 import { getSingleProduct } from "../models/products.model";
+import { generateUUID } from "../utils/generic.util";
 
 
 // --- env ---
@@ -32,10 +33,12 @@ export const paymentController = async (req: Request, res: Response) => {
                     name : prd.name,
                     images : prd.images
                 },
-                unit_ammount : prd.price*items[i].quantity
+                unit_amount : prd.price*items[i].quantity
             },
             quantity : items[i].quantity
         }
+
+        // console.log('#####',newObj.price_data.unit_amount);
 
         rawProduct.push(newObj);
     }
@@ -57,14 +60,18 @@ export const paymentController = async (req: Request, res: Response) => {
 
 
 
-    console.log(rawProduct);
+    // console.log(rawProduct);
+
+    const paymentId = await generateUUID();
+
 
 
     const session = await stripeClient.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: rawProduct,
       mode: "payment",
-      success_url:`${process.env.CLIENT_URL}/success`,
+
+      success_url:`${process.env.CLIENT_URL}/success?id=${paymentId}`,
       cancel_url: `${process.env.CLIENT_URL}/cancel`,
     });
 
