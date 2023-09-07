@@ -4,7 +4,7 @@ import jwt,{Secret} from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 export async function handleLogin(req : Request,res:Response){
-
+    console.log("working", req);
     try {
         // console.log('handle login');
         const saltRounds = process.env.SALT_ROUND!;

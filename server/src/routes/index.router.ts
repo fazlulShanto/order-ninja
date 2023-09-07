@@ -13,37 +13,35 @@ import orderRoute from "./order.route";
 import paymentRoute from "./payment.route";
 
 
-
-
 const indexRouter = Router();
 
 
-
-indexRouter.use(cloudinaryRouter);
-indexRouter.get('/',(req,res)=>{
+// indexRouter.use(cloudinaryRouter);
+indexRouter.get('/', (req, res) => {
     res.send('Order Ninja Server.');
 });
 
 
+indexRouter.use('/login', loginRoute);
+// indexRouter.use('/login', (req, res) => {
+//     res.send('new login route working.');
+// });
 
-indexRouter.use('/pathao',pathaoRouter);
+indexRouter.use('/register', registrationRouter);
+indexRouter.use('/category', cateogryRouter);
+indexRouter.use('/public', publicRouter);
 
-indexRouter.use(`/payment`,paymentRoute);
+indexRouter.use('/pathao', pathaoRouter);
+indexRouter.use(`/payment`, paymentRoute);
 
-
-indexRouter.use('/login',loginRoute);
-indexRouter.use('/register',registrationRouter);
-indexRouter.use('/category',cateogryRouter);
-// indexRouter.use('/register',registrationRouter);
-indexRouter.use('/public',publicRouter);
 
 indexRouter.use(checkAuth);
 
 
-indexRouter.use('/user',userRoute);
-indexRouter.use('/order',orderRoute);
-indexRouter.use('/store',storeRouter);
-indexRouter.use('/product',productRouter);
+indexRouter.use('/user', userRoute);
+indexRouter.use('/order', orderRoute);
+indexRouter.use('/store', storeRouter);
+indexRouter.use('/product', productRouter);
 
 
 export default indexRouter;
